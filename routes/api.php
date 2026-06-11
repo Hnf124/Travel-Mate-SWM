@@ -7,24 +7,40 @@ use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\SearchHistoryController;
 use App\Http\Controllers\WeatherController;
 
-Route::post('/register',[AuthController::class,'register']);
-Route::post('/login',[AuthController::class,'login']);
+/*
+|--------------------------------------------------------------------------
+| API Routes
+|--------------------------------------------------------------------------
+|
+| Routes ini sudah diberi prefix /v1 untuk semua endpoint sesuai unit test.
+|
+*/
 
-Route::middleware('auth:sanctum')->group(function(){
-    Route::post('/logout',[AuthController::class,'logout']);
+Route::prefix('v1')->group(function() {
 
-    Route::get('/tourism-places',[TourismController::class,'index']);
-    Route::get('/tourism-places/{id}',[TourismController::class,'show']);
+    // Auth
+    Route::post('/register',[AuthController::class,'register']);
+    Route::post('/login',[AuthController::class,'login']);
 
-    Route::get('/favorites',[FavoriteController::class,'index']);
-    Route::post('/favorites',[FavoriteController::class,'store']);
-    Route::delete('/favorites/{id}',[FavoriteController::class,'destroy']);
+    // Routes yang memerlukan autentikasi
+    Route::middleware('auth:sanctum')->group(function(){
 
-    Route::get('/search-history',[SearchHistoryController::class,'index']);
-    Route::post('/search-history',[SearchHistoryController::class,'store']);
-	
-	Route::post('/register', [AuthController::class,'register']);
-	Route::post('/login', [AuthController::class,'login']);
+        Route::post('/logout',[AuthController::class,'logout']);
 
-    Route::get('/weather',[WeatherController::class,'show']);
+        // Tourism Places
+        Route::get('/tourism-places',[TourismController::class,'index']);
+        Route::get('/tourism-places/{id}',[TourismController::class,'show']);
+
+        // Favorites
+        Route::get('/favorites',[FavoriteController::class,'index']);
+        Route::post('/favorites',[FavoriteController::class,'store']);
+        Route::delete('/favorites/{id}',[FavoriteController::class,'destroy']);
+
+        // Search History
+        Route::get('/search-history',[SearchHistoryController::class,'index']);
+        Route::post('/search-history',[SearchHistoryController::class,'store']);
+
+        // Weather
+        Route::get('/weather',[WeatherController::class,'show']);
+    });
 });
