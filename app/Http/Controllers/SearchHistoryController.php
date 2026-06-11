@@ -2,50 +2,37 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SearchHistory;
+use App\Contracts\TravelMateServiceInterface;
 use Illuminate\Http\Request;
 
 class SearchHistoryController extends Controller
 {
+    protected TravelMateServiceInterface $travelMateService;
+
+    public function __construct(TravelMateServiceInterface $travelMateService)
+    {
+        $this->travelMateService = $travelMateService;
+    }
+
     public function index(Request $request)
     {
-        $history = SearchHistory::where('user_id', $request->user()->id)
-            ->latest()
-            ->take(20)
-            ->get();
-
-        return response()->json([
-            'status' => 'success',
-            'data' => $history,
-        ]);
+        $history = $this->travelMateService->getSearchHistory($request->user()->id);
+        return response()->json(['status'=>'success','data'=>$history]);
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'keyword' => ['required', 'string'],
-            'type' => ['required', 'string'],
+            'keyword'=>['required','string'],
+            'type'=>['required','string'],
         ]);
 
-        $history = SearchHistory::create([
-            'user_id' => $request->user()->id,
-            'keyword' => $validated['keyword'],
-            'type' => $validated['type'],
-        ]);
+        $history = $this->travelMateService->saveSearchHistory(
+            $request->user()->id,
+            $validated['keyword'],
+            $validated['type']
+        );
 
-        // Hapus entry paling lama jika > 20
-        $count = SearchHistory::where('user_id', $request->user()->id)->count();
-        if ($count > 20) {
-            SearchHistory::where('user_id', $request->user()->id)
-                ->oldest()
-                ->limit($count - 20)
-                ->delete();
-        }
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Search history saved successfully',
-            'data' => $history,
-        ]);
+        return response()->json(['status'=>'success','message'=>'Search saved','data'=>$history]);
     }
 }

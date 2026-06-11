@@ -2,61 +2,42 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Favorite;
+use App\Contracts\TravelMateServiceInterface;
 use Illuminate\Http\Request;
 
 class FavoriteController extends Controller
 {
+    protected TravelMateServiceInterface $travelMateService;
+
+    public function __construct(TravelMateServiceInterface $travelMateService)
+    {
+        $this->travelMateService = $travelMateService;
+    }
+
     public function index(Request $request)
     {
-        $favorites = Favorite::with('tourismPlace')
-            ->where('user_id', $request->user()->id)
-            ->get();
-
-        return response()->json([
-            'status' => 'success',
-            'data' => $favorites,
-        ]);
+        $favorites = $this->travelMateService->getFavorites($request->user()->id);
+        return response()->json(['status'=>'success','data'=>$favorites]);
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'tourism_place_id' => ['required', 'exists:tourism_places,id'],
+            'tourism_place_id'=>['required','exists:tourism_places,id'],
         ]);
 
-        $exists = Favorite::where('user_id', $request->user()->id)
-            ->where('tourism_place_id', $validated['tourism_place_id'])
-            ->exists();
+        $fav = $this->travelMateService->addFavorite($request->user()->id, $validated['tourism_place_id']);
 
-        if ($exists) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Tourism place already added to favorites',
-            ], 422);
+        if (!$fav) {
+            return response()->json(['status'=>'error','message'=>'Already in favorites'],422);
         }
 
-        $favorite = Favorite::create([
-            'user_id' => $request->user()->id,
-            'tourism_place_id' => $validated['tourism_place_id'],
-        ]);
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Tourism place added to favorites',
-            'data' => $favorite,
-        ]);
+        return response()->json(['status'=>'success','message'=>'Added to favorites','data'=>$fav]);
     }
 
-    public function destroy(Request $request, Favorite $favorite)
+    public function destroy(Request $request, int $favoriteId)
     {
-        abort_unless($favorite->user_id === $request->user()->id, 403);
-
-        $favorite->delete();
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Favorite tourism place removed successfully',
-        ]);
+        $this->travelMateService->removeFavorite($request->user()->id, $favoriteId);
+        return response()->json(['status'=>'success','message'=>'Removed from favorites']);
     }
 }

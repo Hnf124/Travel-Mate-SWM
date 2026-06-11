@@ -2,36 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TourismPlace;
+use App\Contracts\TravelMateServiceInterface;
 use Illuminate\Http\Request;
 
 class TourismController extends Controller
 {
-    // Daftar tempat wisata (filter kota)
+    protected TravelMateServiceInterface $travelMateService;
+
+    public function __construct(TravelMateServiceInterface $travelMateService)
+    {
+        $this->travelMateService = $travelMateService;
+    }
+
     public function index(Request $request)
     {
-        $city = $request->query('city');
-
-        $query = TourismPlace::query();
-
-        if ($city) {
-            $query->where('city', 'like', '%' . $city . '%');
-        }
-
-        $data = $query->get();
+        $city = $request->query('city', '');
+        $places = $this->travelMateService->getTourismPlacesByCity($city);
 
         return response()->json([
             'status' => 'success',
-            'data' => $data,
+            'data' => $places,
         ]);
     }
 
-    // Detail tempat wisata
-    public function show(TourismPlace $tourismPlace)
+    public function show(int $id)
     {
+        $place = $this->travelMateService->getTourismPlaceDetail($id);
+
         return response()->json([
             'status' => 'success',
-            'data' => $tourismPlace,
+            'data' => $place,
         ]);
     }
 }
