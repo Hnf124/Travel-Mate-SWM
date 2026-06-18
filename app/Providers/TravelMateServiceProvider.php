@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\Contracts\TravelMateServiceInterface;
 use App\Services\TravelMateService;
+use App\Contracts\WeatherServiceInterface;
+use App\Services\OpenMeteoWeatherService;
 
 class TravelMateServiceProvider extends ServiceProvider
 {
@@ -15,6 +17,7 @@ class TravelMateServiceProvider extends ServiceProvider
     {
         // Binding interface ke implementasi
         $this->app->bind(TravelMateServiceInterface::class, TravelMateService::class);
+        $this->app->bind(WeatherServiceInterface::class, OpenMeteoWeatherService::class);
     }
 
     /**
