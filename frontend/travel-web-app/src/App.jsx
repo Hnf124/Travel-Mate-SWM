@@ -1243,7 +1243,8 @@ export default function App() {
 
                         <div className="muted">
                           {new Date(
-                            item.created_at
+                            item.updated_at ||
+                              item.created_at
                           ).toLocaleString(
                             "id-ID"
                           )}

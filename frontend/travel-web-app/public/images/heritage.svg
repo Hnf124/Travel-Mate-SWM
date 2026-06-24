@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">Ilustrasi tempat bersejarah</title>
+  <desc id="desc">Bangunan berkubah dengan taman.</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#7c3aed"/><stop offset="1" stop-color="#1e3a8a"/></linearGradient></defs>
+  <rect width="1200" height="700" fill="url(#bg)"/>
+  <circle cx="1010" cy="120" r="55" fill="#fef08a"/>
+  <rect x="270" y="360" width="660" height="230" rx="15" fill="#f8fafc"/>
+  <path d="M420 360 C420 190 780 190 780 360 Z" fill="#e2e8f0"/>
+  <circle cx="600" cy="230" r="28" fill="#f8fafc"/>
+  <rect x="575" y="130" width="50" height="95" fill="#f8fafc"/>
+  <path d="M600 80 L630 135 H570 Z" fill="#fde047"/>
+  <rect x="370" y="410" width="110" height="180" rx="55" fill="#cbd5e1"/>
+  <rect x="545" y="410" width="110" height="180" rx="55" fill="#cbd5e1"/>
+  <rect x="720" y="410" width="110" height="180" rx="55" fill="#cbd5e1"/>
+  <path d="M0 585 Q220 520 440 585 T880 585 T1320 585 V700 H0Z" fill="#15803d"/>
+  <text x="70" y="100" font-family="Arial, sans-serif" font-size="54" font-weight="700" fill="#ffffff">Wisata Heritage</text>
+</svg>

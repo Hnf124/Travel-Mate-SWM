@@ -54,6 +54,30 @@ class SearchHistoryApiTest extends TestCase
         ]);
     }
 
+    public function test_repeated_keyword_updates_existing_history_instead_of_creating_duplicate(): void
+    {
+        $user = User::factory()->create();
+
+        Sanctum::actingAs($user);
+
+        $this->postJson('/api/v1/search-history', [
+            'keyword' => 'Banda Aceh',
+            'type' => 'city',
+        ])->assertStatus(200);
+
+        $this->postJson('/api/v1/search-history', [
+            'keyword' => '  Banda   Aceh  ',
+            'type' => 'CITY',
+        ])->assertStatus(200);
+
+        $this->assertDatabaseCount('search_histories', 1);
+        $this->assertDatabaseHas('search_histories', [
+            'user_id' => $user->id,
+            'keyword' => 'Banda Aceh',
+            'type' => 'city',
+        ]);
+    }
+
     public function test_authenticated_user_can_view_search_history(): void
     {
         $user = User::factory()->create();

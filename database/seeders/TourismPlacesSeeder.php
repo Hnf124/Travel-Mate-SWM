@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\TourismPlace;
+use Illuminate\Database\Seeder;
 
 class TourismPlacesSeeder extends Seeder
 {
@@ -17,93 +17,99 @@ class TourismPlacesSeeder extends Seeder
                 'address' => 'Aceh Besar, Banda Aceh',
                 'description' => 'Pantai pasir putih dengan ombak tenang, cocok untuk wisata keluarga.',
                 'short_description' => 'Pantai pasir putih di Banda Aceh.',
-                'image_url' => 'https://example.com/lampuuk.jpg'
+                'image_url' => '/images/beach.svg',
             ],
             [
                 'name' => 'Museum Tsunami',
                 'city' => 'Banda Aceh',
                 'category' => 'Museum',
-                'address' => 'Jl. Sultan Iskandar Muda No. 1',
-                'description' => 'Museum edukasi tentang tsunami dan mitigasi bencana.',
+                'address' => 'Jl. Sultan Iskandar Muda No. 3, Banda Aceh',
+                'description' => 'Museum edukasi tentang tsunami, sejarah bencana, dan mitigasi.',
                 'short_description' => 'Museum edukasi tsunami di Banda Aceh.',
-                'image_url' => 'https://example.com/tsunami.jpg'
+                'image_url' => '/images/museum.svg',
             ],
             [
                 'name' => 'Masjid Raya Baiturrahman',
                 'city' => 'Banda Aceh',
                 'category' => 'Heritage',
-                'address' => 'Jl. Sultan Iskandar Muda No. 1',
-                'description' => 'Masjid bersejarah ikon kota Banda Aceh.',
+                'address' => 'Jl. Moh. Jam, Banda Aceh',
+                'description' => 'Masjid bersejarah dan salah satu ikon utama Kota Banda Aceh.',
                 'short_description' => 'Masjid bersejarah Banda Aceh.',
-                'image_url' => 'https://example.com/masjid.jpg'
+                'image_url' => '/images/heritage.svg',
             ],
             [
                 'name' => 'Pantai Lhoknga',
                 'city' => 'Banda Aceh',
                 'category' => 'Beach',
-                'address' => 'Jl. Pantai Lhoknga, Aceh Besar',
-                'description' => 'Pantai populer untuk surfing dan piknik keluarga.',
-                'short_description' => 'Pantai populer di Banda Aceh.',
-                'image_url' => 'https://example.com/lhoknga.jpg'
+                'address' => 'Lhoknga, Aceh Besar',
+                'description' => 'Pantai populer untuk menikmati laut, berselancar, dan piknik keluarga.',
+                'short_description' => 'Pantai populer di kawasan Banda Aceh.',
+                'image_url' => '/images/beach.svg',
             ],
             [
                 'name' => 'Gunongan Historical Park',
                 'city' => 'Banda Aceh',
                 'category' => 'Heritage',
-                'address' => 'Jl. Teuku Umar No. 1',
-                'description' => 'Taman bersejarah peninggalan Kesultanan Aceh.',
-                'short_description' => 'Taman bersejarah Banda Aceh.',
-                'image_url' => 'https://example.com/gunongan.jpg'
+                'address' => 'Sukaramai, Baiturrahman, Banda Aceh',
+                'description' => 'Kompleks bersejarah peninggalan Kesultanan Aceh dengan arsitektur khas.',
+                'short_description' => 'Taman bersejarah peninggalan Kesultanan Aceh.',
+                'image_url' => '/images/heritage.svg',
             ],
             [
                 'name' => 'Pantai Ulee Lheue',
                 'city' => 'Banda Aceh',
                 'category' => 'Beach',
-                'address' => 'Jl. Ulee Lheue, Banda Aceh',
-                'description' => 'Pantai dengan pemandangan sunset dan restoran seafood.',
-                'short_description' => 'Pantai sunset Banda Aceh.',
-                'image_url' => 'https://example.com/ulee_lheue.jpg'
+                'address' => 'Ulee Lheue, Meuraxa, Banda Aceh',
+                'description' => 'Kawasan pantai untuk menikmati matahari terbenam dan kuliner laut.',
+                'short_description' => 'Pantai untuk menikmati sunset Banda Aceh.',
+                'image_url' => '/images/beach.svg',
             ],
             [
                 'name' => 'Museum Aceh',
                 'city' => 'Banda Aceh',
                 'category' => 'Museum',
-                'address' => 'Jl. Sultan Iskandar Muda No. 18',
-                'description' => 'Museum budaya dan sejarah Aceh.',
-                'short_description' => 'Museum budaya Aceh.',
-                'image_url' => 'https://example.com/museum_aceh.jpg'
+                'address' => 'Jl. Sultan Alaiddin Mahmudsyah, Banda Aceh',
+                'description' => 'Museum yang menyimpan koleksi budaya, sejarah, dan kehidupan masyarakat Aceh.',
+                'short_description' => 'Museum budaya dan sejarah Aceh.',
+                'image_url' => '/images/museum.svg',
             ],
             [
                 'name' => 'Pantai Rancong',
                 'city' => 'Banda Aceh',
                 'category' => 'Beach',
                 'address' => 'Jl. Pantai Rancong, Aceh Besar',
-                'description' => 'Pantai tenang cocok untuk berenang dan memancing.',
+                'description' => 'Pantai tenang yang cocok untuk berenang, memancing, dan bersantai.',
                 'short_description' => 'Pantai tenang di Banda Aceh.',
-                'image_url' => 'https://example.com/rancong.jpg'
+                'image_url' => '/images/beach.svg',
             ],
             [
                 'name' => 'Taman Sari Gunongan',
                 'city' => 'Banda Aceh',
                 'category' => 'Heritage',
-                'address' => 'Jl. Teuku Umar, Banda Aceh',
-                'description' => 'Situs peninggalan kesultanan Aceh, taman dan bangunan klasik.',
+                'address' => 'Sukaramai, Baiturrahman, Banda Aceh',
+                'description' => 'Situs bersejarah Kesultanan Aceh berupa taman dan bangunan klasik.',
                 'short_description' => 'Situs heritage Banda Aceh.',
-                'image_url' => 'https://example.com/taman_sari.jpg'
+                'image_url' => '/images/heritage.svg',
             ],
             [
                 'name' => 'Pantai Lampulo',
                 'city' => 'Banda Aceh',
                 'category' => 'Beach',
                 'address' => 'Jl. Pantai Lampulo, Banda Aceh',
-                'description' => 'Pantai dengan ombak lembut dan pemandangan indah.',
+                'description' => 'Pantai dengan ombak lembut dan pemandangan pesisir yang indah.',
                 'short_description' => 'Pantai Lampulo Banda Aceh.',
-                'image_url' => 'https://example.com/lampulo.jpg'
+                'image_url' => '/images/beach.svg',
             ],
         ];
 
         foreach ($places as $place) {
-            TourismPlace::create($place);
+            TourismPlace::updateOrCreate(
+                [
+                    'name' => $place['name'],
+                    'city' => $place['city'],
+                ],
+                $place
+            );
         }
     }
 }

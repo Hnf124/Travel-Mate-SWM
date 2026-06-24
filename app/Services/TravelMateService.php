@@ -3,15 +3,16 @@
 namespace App\Services;
 
 use App\Contracts\TravelMateServiceInterface;
-use App\Models\TourismPlace;
 use App\Models\Favorite;
 use App\Models\SearchHistory;
+use App\Models\TourismPlace;
+use Illuminate\Support\Str;
 
 class TravelMateService implements TravelMateServiceInterface
 {
     public function getTourismPlacesByCity(string $city)
     {
-        return TourismPlace::where('city', 'like', "%$city%")->get();
+        return TourismPlace::where('city', 'like', "%{$city}%")->get();
     }
 
     public function getTourismPlaceDetail(int $id)
@@ -25,7 +26,9 @@ class TravelMateService implements TravelMateServiceInterface
             ->where('tourism_place_id', $tourismPlaceId)
             ->exists();
 
-        if ($exists) return null; // sudah ada
+        if ($exists) {
+            return null;
+        }
 
         return Favorite::create([
             'user_id' => $userId,
@@ -44,33 +47,45 @@ class TravelMateService implements TravelMateServiceInterface
     {
         return Favorite::with('tourismPlace')
             ->where('user_id', $userId)
+            ->latest('updated_at')
             ->get();
     }
 
     public function saveSearchHistory(int $userId, string $keyword, string $type)
     {
-        $history = SearchHistory::create([
-            'user_id' => $userId,
-            'keyword' => $keyword,
-            'type' => $type,
-        ]);
+        $normalizedKeyword = Str::squish($keyword);
+        $normalizedType = Str::lower(Str::squish($type));
 
-        // pastikan maksimal 20 entry per user
-        $count = SearchHistory::where('user_id', $userId)->count();
-        if ($count > 20) {
-            SearchHistory::where('user_id', $userId)
-                ->oldest()
-                ->limit($count - 20)
-                ->delete();
-        }
+        $history = SearchHistory::updateOrCreate(
+            [
+                'user_id' => $userId,
+                'keyword' => $normalizedKeyword,
+                'type' => $normalizedType,
+            ],
+            [
+                'updated_at' => now(),
+            ]
+        );
 
-        return $history;
+        // Pertahankan maksimal 20 keyword unik terbaru untuk setiap pengguna.
+        $idsToKeep = SearchHistory::where('user_id', $userId)
+            ->latest('updated_at')
+            ->latest('id')
+            ->limit(20)
+            ->pluck('id');
+
+        SearchHistory::where('user_id', $userId)
+            ->whereNotIn('id', $idsToKeep)
+            ->delete();
+
+        return $history->fresh();
     }
 
     public function getSearchHistory(int $userId)
     {
         return SearchHistory::where('user_id', $userId)
-            ->latest()
+            ->latest('updated_at')
+            ->latest('id')
             ->take(20)
             ->get();
     }
